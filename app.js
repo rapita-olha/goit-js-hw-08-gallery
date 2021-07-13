@@ -63,3 +63,24 @@ const galleryItems = [
       description: 'Lighthouse Coast Sea',
     },
   ];
+
+  const ulElement = document.querySelector("ul");
+
+  galleryItems.forEach(e => {
+  
+   const liElement =  `<li class="gallery__item">
+      <a
+        class="gallery__link"
+        href="${e.original}"
+      >
+        <img
+          class="gallery__image"
+          src="${e.preview}"
+          data-source="${e.original}"
+          alt="${e.description}"
+        />
+      </a>
+    </li>`
+
+  ulElement.innerHTML += liElement
+  })
