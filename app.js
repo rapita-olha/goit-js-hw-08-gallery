@@ -64,23 +64,41 @@ const galleryItems = [
     },
   ];
 
-  const ulElement = document.querySelector("ul");
+  const refs = {
+    gallery: document.querySelector(".gallery"),
+    modal: document.querySelector(".js-lightbox"),
+    modalImg: document.querySelector(".lightbox__image"),
+    closeBtn: document.querySelector("[data-action=close-lightbox]"),
+  };
 
-  galleryItems.forEach(e => {
-  
-   const liElement =  `<li class="gallery__item">
+  const makeGalleryMarkup = ({ preview, original, description }) =>
+    `<li class="gallery__item">
       <a
         class="gallery__link"
-        href="${e.original}"
+        href='${original}'
       >
         <img
           class="gallery__image"
-          src="${e.preview}"
-          data-source="${e.original}"
-          alt="${e.description}"
+          src='${preview}'
+          data-source='${original}'
+          alt='${description}'
         />
       </a>
-    </li>`
+    </li>`;
 
-  ulElement.innerHTML += liElement
-  })
+  const markup = galleryItems.map(makeGalleryMarkup);
+
+  refs.gallery.insertAdjacentHTML("beforeend", markup.join(""));
+
+  function onOpenModal(e) {
+    e.preventDefault();
+    if (e.target.nodeNme !== 'IMG') {
+      return;
+    }
+    refs.modal.classList.add("is-open");
+    refs.modalImg.src = e.target.dataset.sourse;
+    refs.modalImg.alt = e.target.alt;
+
+  } 
+
+  refs.gallery.addEventListener("click", onOpenModal);
