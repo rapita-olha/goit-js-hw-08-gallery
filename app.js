@@ -64,6 +64,8 @@ const galleryItems = [
     },
   ];
 
+  let activeIndex = 0;
+
   const refs = {
     gallery: document.querySelector(".gallery"),
     modal: document.querySelector(".js-lightbox"),
@@ -92,13 +94,44 @@ const galleryItems = [
 
   function onOpenModal(e) {
     e.preventDefault();
-    if (e.target.nodeNme !== 'IMG') {
+    if (e.target.nodeNme !== "IMG") {
       return;
     }
+    markup.forEach((el, index) => {
+      if (el.includes(e.target.src)) {
+        activeIndex = index;
+      }
+
+    })
+    console.log(activeIndex);
+    window.addEventListener("keydown", onEscapeBtnPress);
     refs.modal.classList.add("is-open");
     refs.modalImg.src = e.target.dataset.sourse;
     refs.modalImg.alt = e.target.alt;
+  }
 
+  function closeModal() {
+    refs.modal.classList.remove("is-open");
+    window.removeEventListener("keydown", onEscapeBtnPress);
+    refs.modalImg.src = "#";
+    refs.modalImg.alt = "#";
   } 
 
+function onModalClose(e) {
+  if (e.target.nodeNme === "IMG") {
+    return;
+  }  
+  closeModal();
+}
+
+function onEscapeBtnPress(e) {
+  if (e.keyCode === 27) {
+    closeModal();
+  }
+  console.log(e.key);
+}
+
+
+
   refs.gallery.addEventListener("click", onOpenModal);
+  refs.modal.addEventListener("click", onModalClose);
