@@ -65,14 +65,13 @@ const galleryItems = [
   ];
 
   let activeIndex = 0;
-
   const refs = {
     gallery: document.querySelector(".gallery"),
     modal: document.querySelector(".js-lightbox"),
     modalImg: document.querySelector(".lightbox__image"),
     closeBtn: document.querySelector("[data-action=close-lightbox]"),
+    overlayEl: document.querySelector('.lightbox__image'),
   };
-
   const makeGalleryMarkup = ({ preview, original, description }) =>
     `<li class="gallery__item">
       <a
@@ -87,21 +86,17 @@ const galleryItems = [
         />
       </a>
     </li>`;
-
   const markup = galleryItems.map(makeGalleryMarkup);
-
   refs.gallery.insertAdjacentHTML("beforeend", markup.join(""));
-
   function onOpenModal(e) {
     e.preventDefault();
-    if (e.target.nodeNme !== "IMG") {
+    if (e.target.nodeName !== "IMG") {
       return;
     }
     markup.forEach((el, index) => {
       if (el.includes(e.target.src)) {
         activeIndex = index;
       }
-
     })
     console.log(activeIndex);
     window.addEventListener("keydown", onEscapeBtnPress);
@@ -109,28 +104,28 @@ const galleryItems = [
     refs.modalImg.src = e.target.dataset.source;
     refs.modalImg.alt = e.target.alt;
   }
-
   function closeModal() {
     refs.modal.classList.remove("is-open");
     window.removeEventListener("keydown", onEscapeBtnPress);
     refs.modalImg.src = "#";
     refs.modalImg.alt = "#";
   } 
-
 function onModalClose(e) {
   if (e.target.nodeNme === "IMG") {
     return;
-  }  
+  }
   closeModal();
 }
-
 function onEscapeBtnPress(e) {
   if (e.keyCode === 27) {
     closeModal();
   }
   console.log(e.key);
 }
+refs.gallery.addEventListener("click", onOpenModal);
+refs.closeBtn.addEventListener("click", onModalClose);
 
 
-refs.modal.addEventListener("click", onOpenModal);
-refs.modal.addEventListener("click", onModalClose);
+
+
+
