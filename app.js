@@ -133,5 +133,5 @@ function onEscapeBtnPress(e) {
 
 
 
-  refs.gallery.addEventListener("click", onOpenModal);
+  refs.gallery-modal.addEventListener("click", onOpenModal);
   refs.modal.addEventListener("click", onModalClose);
