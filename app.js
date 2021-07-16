@@ -106,7 +106,7 @@ const galleryItems = [
     console.log(activeIndex);
     window.addEventListener("keydown", onEscapeBtnPress);
     refs.modal.classList.add("is-open");
-    refs.modalImg.src = e.target.dataset.sourse;
+    refs.modalImg.src = e.target.dataset.source;
     refs.modalImg.alt = e.target.alt;
   }
 
